@@ -293,7 +293,7 @@ export const agentAbi = [
         type: 'uint256',
         indexed: true,
       },
-      { name: 'query', internalType: 'string', type: 'string', indexed: true },
+      { name: 'query', internalType: 'string', type: 'string', indexed: false },
     ],
     name: 'AgentRunCreated',
   },
@@ -383,6 +383,7 @@ export const agentAbi = [
  */
 export const agentAddress = {
   31337: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+  696969: '0x37CC59105D764aadf3b7a9C4aAA67062dF6cB666',
 } as const
 
 /**
@@ -1053,6 +1054,7 @@ export const chatOracleAbi = [
  */
 export const chatOracleAddress = {
   31337: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  696969: '0x2A54624dBD1bdCB6e3a6d37991F9Fbce26EF9850',
 } as const
 
 /**
