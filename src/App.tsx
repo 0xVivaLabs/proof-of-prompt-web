@@ -1,7 +1,7 @@
 import { useAtom, useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { formatEther } from "viem";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { readContract } from "wagmi/actions";
 
 import "./index.css";
@@ -19,6 +19,7 @@ import { config } from "./wagmi.ts";
 function App() {
   const { address } = useAccount();
   const chainId = useChainId();
+  const { chains, switchChain } = useSwitchChain()
 
   const isShowClaim = useAtomValue(isShowClaimAtom);
   const [coinBalance, setCoinBalance] = useAtom(coinBalanceAtom);
@@ -50,6 +51,13 @@ function App() {
         </div>
         {address && <div className="text-2xl font-sans mr-8">$PoP: {formatEther(coinBalance)}</div>}
         <div>
+        {chains.slice(0,1).map((chain) => (
+          <button className="btn" key={chain.id} type="button" onClick={() => switchChain({ chainId: chain.id })}>
+            Add {chain.name}
+          </button>
+        ))}
+        </div>
+        <div>
           <button className="btn" onClick={() => window.open("https://docs.galadriel.com/faucet")} type="button">
             Faucet
           </button>
@@ -57,7 +65,7 @@ function App() {
         <div>{address ? <Account /> : <Connect />}</div>
       </header>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col justify-center">
         {isShowClaim && <Claim />}
         <Mining />
         <Streaming />

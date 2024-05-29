@@ -49,7 +49,7 @@ function Claim() {
   }, [isError, error]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="relative bg-light p-6 rounded-custom shadow-box">
         <button
           className="absolute top-2 right-2 text-2xl font-bold btn"

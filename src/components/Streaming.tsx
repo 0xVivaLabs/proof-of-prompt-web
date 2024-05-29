@@ -37,9 +37,7 @@ const Streaming = () => {
 
   return (
     <div className="flex justify-center mt-8">
-      {isFirstLoading ? (
-        <p className="font-mono">Loading History...</p>
-      ) : (
+      {!isFirstLoading &&
         <>
           {isShowStreaming ? (
             <div className="box w-2/3 m-2">
@@ -59,11 +57,11 @@ const Streaming = () => {
             </div>
           ) : (
             <button className="btn" onClick={() => setIsShowStreaming(true)} type="button">
-              Show Streaming
+              Show All
             </button>
           )}
         </>
-      )}
+      }
     </div>
   );
 };
