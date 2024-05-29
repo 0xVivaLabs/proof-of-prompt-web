@@ -19,7 +19,6 @@ import { config } from "./wagmi.ts";
 function App() {
   const { address } = useAccount();
   const chainId = useChainId();
-  const { chains, switchChain } = useSwitchChain()
 
   const isShowClaim = useAtomValue(isShowClaimAtom);
   const [coinBalance, setCoinBalance] = useAtom(coinBalanceAtom);
@@ -75,7 +74,7 @@ function App() {
       </div>
 
       <footer className="flex justify-center mb-8">
-        <p className="font-mono text-sm text-gray-500">© 2024 Prove Of Prompt</p>
+        <p className="font-mono text-sm text-gray-500">© 2024 Proof Of Prompt</p>
       </footer>
     </div>
   );
