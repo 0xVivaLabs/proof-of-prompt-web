@@ -51,11 +51,14 @@ function App() {
         </div>
         {address && <div className="text-2xl font-sans mr-8">$PoP: {formatEther(coinBalance)}</div>}
         <div>
-        {chains.slice(0,1).map((chain) => (
+        {/* {chains.slice(0,1).map((chain) => (
           <button className="btn" key={chain.id} type="button" onClick={() => switchChain({ chainId: chain.id })}>
-            Add {chain.name}
+            {chain.name}
           </button>
-        ))}
+        ))} */}
+          <button className="btn" onClick={() => window.open("https://chainlist.org/?search=696969&testnets=true")} type="button">
+            Add Network
+          </button>
         </div>
         <div>
           <button className="btn" onClick={() => window.open("https://docs.galadriel.com/faucet")} type="button">
