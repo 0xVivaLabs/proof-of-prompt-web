@@ -7,66 +7,65 @@ import { agentConfig } from "../generated";
 const isFirstLoadingAtom = atom(true);
 
 const Streaming = () => {
-    const [runs, setRuns] = useAtom(agentRunsAtom);
-    const [, setUserRuns] = useAtom(userRunsAtom);
+  const [runs, setRuns] = useAtom(agentRunsAtom);
+  const [, setUserRuns] = useAtom(userRunsAtom);
 
-    const { address } = useAccount();
+  const { address } = useAccount();
 
-    const [isShowStreaming, setIsShowStreaming] = useAtom(isShowStreamingAtom);
-    const [isFirstLoading, setIsFirstLoading]= useAtom(isFirstLoadingAtom);
+  const [isShowStreaming, setIsShowStreaming] = useAtom(isShowStreamingAtom);
+  const [isFirstLoading, setIsFirstLoading] = useAtom(isFirstLoadingAtom);
 
-    const chainId = useChainId();
+  const chainId = useChainId();
 
-    useWatchContractEvent({
-        address: agentConfig.address[chainId],
-        abi: agentConfig.abi,
-        eventName: 'AgentRunCreated',
-        onLogs(logs) {
-            // Only add new runs to the list
-            const newRuns = logs.map(log => log.args!);
-            console.log('newRuns:', newRuns.map(run => run.runId ?? undefined));
-            setRuns(newRuns);
-            setUserRuns(newRuns.filter(run => run.owner === address));
-            if(isFirstLoading) setIsFirstLoading(false)
-        },
-        onError(error) {
-            console.error('Error watching AgentRunCreated logs', error);
-        },
-    });
+  useWatchContractEvent({
+    address: agentConfig.address[chainId],
+    abi: agentConfig.abi,
+    eventName: "AgentRunCreated",
+    onLogs(logs) {
+      if (!logs || logs.length === 0) return;
+      // biome-ignore lint/style/noNonNullAssertion: log.args is always defined
+      const newRuns = logs.map((log) => log.args!);
+      setRuns(newRuns);
+      setUserRuns(newRuns.filter((run) => run.owner === address));
+      if (isFirstLoading) setIsFirstLoading(false);
+    },
+    onError(error) {
+      console.error("Error watching AgentRunCreated logs", error);
+    },
+    pollingInterval: 60_000,
+  });
 
-    return (
+  return (
+    <div className="flex justify-center mt-8">
+      {isFirstLoading ? (
+        <p className="font-mono">Loading History...</p>
+      ) : (
         <>
-            <h1>Streaming</h1>
-
-            {isFirstLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <>
-                    {isShowStreaming ? (
-                        <div>
-                            {runs.length > 0 ? (
-                                runs.reverse().map((run, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <p>runId: {run.runId?.toString()}</p>
-                                            <p>prompt: {run.query}</p>
-                                            <p>owner: {run.owner}</p>
-                                        </div>
-                                    );
-                                })
-                            ) : (
-                                <p>No data</p>
-                            )}
-                        </div>
-                    ) : (
-                        <button onClick={() => setIsShowStreaming(true)}>
-                            Show Streaming
-                        </button>
-                    )}
-                </>
-            )}
+          {isShowStreaming ? (
+            <div className="box w-2/3 m-2">
+              {runs.length > 0 ? (
+                runs.reverse().map((run) => {
+                  return (
+                    <div className="data-row" key={run.runId}>
+                      <p>{run.runId?.toString()}</p>
+                      <p>{run.query}</p>
+                      <p>{run.owner}</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No data</p>
+              )}
+            </div>
+          ) : (
+            <button className="btn" onClick={() => setIsShowStreaming(true)} type="button">
+              Show Streaming
+            </button>
+          )}
         </>
-    );
+      )}
+    </div>
+  );
 };
 
 export default Streaming;

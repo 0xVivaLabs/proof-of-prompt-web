@@ -1,28 +1,18 @@
-import { useAccount, useDisconnect } from 'wagmi'
+import { useAccount, useDisconnect } from "wagmi";
 
 function Account() {
-  const account = useAccount()
-  const { disconnect } = useDisconnect()
+  const account = useAccount();
+  const { disconnect } = useDisconnect();
 
   return (
-    <div>
-      <h2>Account</h2>
-
-      <div>
-        status: {account.status}
-        <br />
-        addresses: {JSON.stringify(account.addresses)}
-        <br />
-        chainId: {account.chainId}
-      </div>
-
-      {account.status === 'connected' && (
-        <button type="button" onClick={() => disconnect()}>
+    <div className="connect">
+      {account.status === "connected" && (
+        <button className="btn" type="button" onClick={() => disconnect()}>
           Disconnect
         </button>
       )}
     </div>
-  )
+  );
 }
 
-export default Account
+export default Account;

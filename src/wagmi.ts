@@ -1,22 +1,19 @@
-import { http, createConfig } from 'wagmi'
-import { anvil } from 'wagmi/chains'
-import { galadrielDevnet } from './chain'
-import { injected, walletConnect } from 'wagmi/connectors'
+import { http, createConfig } from "wagmi";
+import { anvil } from "wagmi/chains";
+import { injected } from "wagmi/connectors";
+import { galadrielDevnet } from "./chain";
 
 export const config = createConfig({
   chains: [galadrielDevnet, anvil],
-  connectors: [
-    injected(),
-    walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
-  ],
+  connectors: [injected()],
   transports: {
     [galadrielDevnet.id]: http(),
     [anvil.id]: http(),
   },
-})
+});
 
-declare module 'wagmi' {
+declare module "wagmi" {
   interface Register {
-    config: typeof config
+    config: typeof config;
   }
 }

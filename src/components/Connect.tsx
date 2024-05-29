@@ -1,20 +1,17 @@
-import { useConnect } from 'wagmi'
+import { useConnect } from "wagmi";
 
 function Connect() {
-  const { connectors, connect, status, error } = useConnect()
+  const { connectors, connect } = useConnect();
 
   return (
-    <div>
-      <h2>Connect</h2>
+    <div className="connect">
       {connectors.map((connector) => (
-        <button key={connector.uid} onClick={() => connect({ connector })} type="button">
+        <button className="btn" key={connector.uid} onClick={() => connect({ connector })} type="button">
           {connector.name}
         </button>
       ))}
-      <div>{status}</div>
-      <div>{error?.message}</div>
     </div>
-  )
+  );
 }
 
-export default Connect
+export default Connect;
