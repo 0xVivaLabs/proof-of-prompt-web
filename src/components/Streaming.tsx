@@ -40,7 +40,7 @@ const Streaming = () => {
       {!isFirstLoading &&
         <>
           {isShowStreaming ? (
-            <div className="box w-2/3 m-2">
+            <div className="box w-2/3 m-2 h-128 overflow-y-auto">
               {runs.length > 0 ? (
                 runs.reverse().map((run) => {
                   return (
