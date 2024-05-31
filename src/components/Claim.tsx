@@ -35,6 +35,7 @@ function Claim() {
     writeContract({
       abi: agentConfig.abi,
       address: agentConfig.address[chainId],
+      chainId,
       functionName: "claim",
       // biome-ignore lint/style/noNonNullAssertion: RunId is always defined
       args: [latestRun.runId!],

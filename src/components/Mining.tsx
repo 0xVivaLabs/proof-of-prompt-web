@@ -72,6 +72,7 @@ function Mining() {
             writeContract({
               abi: agentConfig.abi,
               address: agentConfig.address[chainId],
+              chainId,
               functionName: "runAgent",
               args: [inputValue || ""],
             })
